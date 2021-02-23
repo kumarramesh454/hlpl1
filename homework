@@ -1,0 +1,36 @@
+#include "std_lib_facilities.h"
+int main()
+{
+double a, b, c, x1, x2;
+//ax^2+bx+c=0
+cout<<"enter the value of a=";
+cin>>a;
+cout<<"enter the value of b=";
+cin>>b;
+cout<<"enter the value of c=";
+cin>>c;
+cout<<"The quadric equation is"<<a;
+cout<<"*x*x+"<<b;
+cout<<"*x+"<<c<<end1;
+if(a==0 && b==0)
+cout<<"not a valid equation";
+if(a==0 && b!=0)
+{
+  x1=-(c/b);
+  cout<<end1;
+  cout<<"root="<<x1;
+  cout<<end1;
+}
+if((b*b+4*a*c)>0)
+{
+   x2=(b*b)-(4*a*c);
+   x1=-b+sqrt(x2);
+   cout<<"root="<<x1<<end1;
+}
+if((b*b)-(4*a*c)<0)
+{
+cout<<"not a real root"<<end1;
+}
+ system"Pause";
+
+}
