@@ -1,0 +1,50 @@
+#include "std_lib_facilities.h"
+
+int fact(int a){
+        if(a>1){
+            return a*fact(a-1);
+       }
+        else{
+           return 1;
+        }
+    }
+int main (){
+    int num1,num2,num3,n,r,choice;
+    cout<<"Enter the value of n";
+    cin>>r;
+    cout<<"Enter the value of r";
+    cin>>r;
+    if(n<r){
+        cout<<"The value of n must be greater than r";
+        cout<<"Enter again";
+        cin>>n>>r;
+    }
+    cout<<"\tEnter 1 to find permutation";
+    cout<<"\tEnter 2 to find combination\n";
+    cout<<"Enter Your Choice";
+    cin>>choice;
+    switch(choice){
+        case 1:
+        {
+            num1=fact(n);
+            num2=fact(n-r);
+            num3=num1/num2;
+            cout<<"nPr="<<num3;
+            break;
+        }
+        case 2:
+        {
+            num1=fact(n);
+            num2=fact(n-r)*fact(r);
+            num3=num1/num2;
+            cout<<"nCr="<<num3;
+            break;
+        }
+        default:
+        {
+            cout<<"You entered an incorrect choice:";
+            break;
+        }
+    }
+    return 0;
+}    
