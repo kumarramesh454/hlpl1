@@ -1,12 +1,14 @@
 #include "std_lib_facilities.h"
 
 int fact(int a){
+    
         if(a>1){
             return a*fact(a-1);
        }
         else{
            return 1;
         }
+    
     }
 int main (){
     int num1,num2,num3,n,r,choice;
@@ -14,7 +16,7 @@ int main (){
     cin>>n;
     cout<<"Enter the value of r";
     cin>>r;
-    if(n<r){
+    while(n<r){
         cout<<"The value of n must be greater than r";
         cout<<"Enter again";
         cin>>n>>r;
@@ -26,19 +28,27 @@ int main (){
     switch(choice){
         case 1:
         {
+            try{
             num1=fact(n);
             num2=fact(n-r);
             num3=num1/num2;
             cout<<"nPr="<<num3;
             break;
+            }catch(exception e){
+                cout<<"Sorry something went wrong"<<endl;
+            }
         }
         case 2:
         {
+            try{
             num1=fact(n);
             num2=fact(n-r)*fact(r);
             num3=num1/num2;
             cout<<"nCr="<<num3;
             break;
+            }catch(exception e){
+                cout<<"Sorry something went wrong"<<endl;
+            }
         }
         default:
         {
@@ -47,4 +57,4 @@ int main (){
         }
     }
     return 0;
-}    
+}
