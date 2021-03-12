@@ -1,0 +1,31 @@
+#include "std_lib_facilities.h"
+
+int main()
+{
+    vector<string> names;
+    vector<double> ages;
+    string name;
+    double age;
+    cout << "Please enter five names: ";
+    for (int i  = 0; i < 5; i++)
+    {
+        cin >> name;
+        cin.ignore();
+        names.push_back(name);
+        sort(names.begin(), names.end());
+        cout << "This was name number " << i + 1 << "\n";
+    }
+    cout << "Please enter those five people's ages: ";
+    for (int i = 0; i < 5; i++)
+    {
+        cin >> age;
+        cin.ignore();
+        ages.push_back(age);
+        cout << "This was age number " << i + 1 << "\n";
+    }
+    for (unsigned i = 0; i < names.size(); i++)
+    {
+        cout << names[i] << " is of age " << ages[i] << "\n";
+    }
+    
+}
