@@ -1,0 +1,97 @@
+#include<iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+vector <int> countString(vector <string> str){
+    vector <int> counts;
+    int count;
+    for (int i=0;i<str.size();i++){
+        count=0;
+        counts.push_back(str[i].length());
+    }
+    return counts;
+}
+string longest(vector<string> str){
+    vector <int> counts=countString(str);
+    int longest=counts[0];
+    int longindex=0;
+    for (int  i = 1; i < counts.size(); i++)
+    {
+        if (counts[i]>longest){
+            longest=counts[i];
+            longindex=i;
+        }
+    }
+    return str[longindex];
+    
+}
+string shortest(vector<string> str){
+    vector <int> counts=countString(str);
+    int shortest=counts[0];
+    int shortindex=0;
+    for (int  i = 1; i < counts.size(); i++)
+    {
+        if (counts[i]<shortest){
+            shortest=counts[i];
+            shortindex=i;
+        }
+    }
+    return str[shortindex];
+}
+vector <string>sortString(vector<string> str){
+    //convert each string into the lower or upper case to ease it
+    //i am converting each nameinto upper case
+    for (int i=0;i<str.size();i++){
+        transform(str[i].begin(), str[i].end(),str[i].begin(),::toupper);
+    }
+    //sort 
+    //insertion sort
+    for (int i=1;i<str.size();i++){
+        string key=str[i];
+        int j=i-1;
+        while(j>=0 && str[j]>key){
+            str[j+1]=str[j];
+            j--;
+        }
+        str[j+1]=key;
+    }
+    return str;
+}
+string sortedFirst(vector <string> str){
+    vector<string> sortedString=sortString(str);
+    return sortedString[0];
+} 
+string sortedLast(vector <string> str){
+    vector <string> sortedString=sortString(str);
+    return sortedString[str.size()-1];
+}
+int main(){
+    //Implementation:
+    vector<string> sample;
+    
+    sample.push_back("Ramesh");
+    sample.push_back("Muneb");
+    sample.push_back("Aadarsh");
+    vector<int> answers=countString(sample);
+    //counts:
+    for (int i=0; i<answers.size();i++){
+        cout<<sample[i]<<": "<<answers[i]<<"Letters"<<endl;
+    }
+    cout<<"Longest String: "<<longest(sample)<<endl;
+    cout<<"Shortest String:"<<shortest(sample)<<endl;
+    cout<<"first in Lexicographical order"<<endl<<sortedFirst(sample)<<endl;
+    cout<<"last in Lexicographical ordedr:"<<endl<<sortedLast(sample)<<endl;
+    system("pause");
+    return 0;
+}
+
+
+
+
+
+
+
+
+Total functions used =6 excluding the mainfunction
