@@ -1,87 +1,31 @@
 #include "std_lib_facilities.h"
 
-bool whitespace(char ch)
+int main() {
+    int sum=0, number;
+    vector<int> numbers;
+    string word;
+    fstream file;
+    file.open("ramesh.txt", fstream::in);
 
-{
-    return (ch == ' ' || ch == '\t' || ch == '\n');
-}
-bool digit(char ch)
-{
-    switch (ch)
-    {
-    case '0':
-    case '1':
-    case '2':
-    case '3':
-    case '4':
-    case '5':
-    case '6':
-    case '7':
-    case '8':
-    case '9':
-        return true;
-    default:
-        return false;
+    while (true) {
+        file >> number;
+        if (file.eof()) {
+            numbers.push_back(number);
+            break;
+        }
+        else if (file.fail()) { 
+            file.clear();
+            file >> word;
+        }
+        else if (file.bad()) exit(1);
+        else numbers.push_back(number);
     }
-}
 
-int main()
-try
-{
-    cout << "please enter an input file names: ";
-    string name;
-    cin >> name;
-    ifstream is(name.c_str());
-    if (!is)
-        error("bad input file name ", name);
+    for (int i=0 ; i<numbers.size(); i++){
+		sum +=numbers[i];
+	}
 
-    string s;
-    int n;
-    int sum = 0;
-    int count = 0; // I just want to know how many integers I found
-    char ch;
+    cout << sum << "\n";
 
-    while (is >> ch)
-    { 
-        if (digit(ch))
-        {
-            if (is >> n)
-            {
-                is.putback(ch);
-                if (is.get(ch) && whitespace(ch))
-                {
-                    ++count;
-                    sum += n;
-                }
-                else
-                {
-                    is.putback(ch);
-                    is >> s;
-                }
-            }
-            else
-            {
-                error("impossible");
-            }
-        }
-        else
-        {
-            is.putback(ch);
-            is >> s;
-        }
-    };
-
-    cout << "integer count: " << count << " sum: " << sum << '\n';
-
-    keep_window_open("~");
-}
-catch (runtime_error e)
-{
-    cout << e.what() << '\n';
-    keep_window_open("~");
-}
-catch (...)
-{
-    cout << "exiting\n";
-    keep_window_open("~");
+return 0;
 }
