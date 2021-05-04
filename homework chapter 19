@@ -1,11 +1,12 @@
-#include <iostream>
-using namespace std;
+#include "std_lib_facilities.h"
+
 template <typename TN> class Vectors
 {
+  public:
   //attributes
     TN* list;
     int size,x;
-vector_def:
+
     Vectors()     
     {
 
@@ -16,10 +17,10 @@ vector_def:
     void push_front(TN data)
     {
         if (x == size) {
-            increase_memory(5)
+            increase_memory(5);
         }
         int t=1;
-        TN* temp =new TN[size]
+        TN* temp =new TN[size];
         for (int i=0;i<size;i++){
           temp[t]=list[i];
           t++;
@@ -65,7 +66,7 @@ vector_def:
       int poped_element = list[0];
       TN* temp =new TN[size];
       for (int i=0;i<size-1;i++){
-        temp[i]=list[i+1]
+        temp[i]=list[i+1];
       }
       delete[] list;
       list=temp;
@@ -101,7 +102,7 @@ vector_def:
     }   
     void print_all()
     {
-        cout<<"{"
+        cout<<"{";
         for (int i = 0; i < x; i++) {
             cout << "["<<list[i] <<"]"<< ", ";
         }
