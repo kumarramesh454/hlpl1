@@ -1,0 +1,167 @@
+#include "std_lib_facilities.h"
+// 1.Define a struct item
+struct Item {
+    string name;
+    int iid;
+    double value;
+};
+
+ostream& operator<<(ostream& os, const Item& it)
+{
+    return os << it.name <<'\t'
+              << it.iid <<'\t'
+              << it.value;
+}
+
+istream& operator>>(istream& is, Item& it)
+{
+    string ss;
+    int ii;
+    double dd;
+    is >> ss >> ii >> dd;
+    Item itt {ss, ii, dd};
+    it = itt;
+    return is;
+}
+
+// 4. Sort vi by decreasing value
+struct Cmp_by_dec_val {
+    bool operator()(const Item& a, const Item& b)
+    {
+        return a.value > b.value;
+    }
+};
+
+// 5. Insert in order
+class Smaller_than {
+    double val;
+public:
+    Smaller_than(double vv) : val{vv} { }
+    bool operator()(const Item& x) const { return x.value < val; }
+};
+
+//  6. Erase by name
+class Cmp_by_name {
+    string name;
+public:
+    Cmp_by_name(const string& nn) : name{nn} { }
+    bool operator()(const Item& x) const { return x.name == name; }
+};
+
+//  7. Erase by iid
+class Cmp_by_iid {
+    int iid;
+public:
+    Cmp_by_iid(int id) : iid{id} { }
+    bool operator()(const Item& x) const { return x.iid == iid; }
+};
+
+
+template<typename C>
+void print(const C& c, char sep = ' ')
+{
+    for (const auto& a : c)
+        cout << a << sep;
+    cout << '\n';
+}
+
+
+int main()
+try {
+    // 2. Make a vector<Item>,vi, and fill it with ten Items from a file
+    const string iname {"file.txt"};
+
+    ifstream ifs {iname};
+    if (!ifs) throw runtime_error("File is empty: " + iname);
+
+    vector<Item> vi;
+    for (Item ii; ifs >> ii; )
+        vi.push_back(ii);
+
+    // 9. Repeat exercise with a list<Item>
+    list<Item> li (vi.size());
+    copy(vi.begin(), vi.end(), li.begin());
+
+    // 3. Sort vi by name
+    sort(vi.begin(), vi.end(),
+            [](const Item& a, const Item& b) { return a.name < b.name; });
+
+    // 4. Sort vi by iid
+    sort(vi.begin(), vi.end(),
+            [](const Item& a, const Item& b) { return a.iid < b.iid; });
+
+    // 5. Sort vi by value; print it in order of decreasing value.
+    sort(vi.begin(), vi.end(), Cmp_by_dec_val()); /*largest value first(ex:56,43,23)*/
+
+    // 6.(a) Insert Item("horse shoe",99,12.34). 
+    Item tmp {"horse shoe", 99, 1.34};  
+    vi.insert(
+            find_if(vi.begin(), vi.end(), Smaller_than(tmp.value)),
+            tmp);
+   // 6 (b) Insert Item("Canon S400", 9988,499.95). 
+    tmp = Item{"Canon S400", 9988, 499.95};
+    vi.insert(
+            find_if(vi.begin(), vi.end(), Smaller_than(tmp.value)),
+            tmp);
+
+    // 7. Remove (erase) two Items identified by name from vi.
+    vi.erase(find_if(vi.begin(), vi.end(), Cmp_by_name("lighter")));
+    vi.erase(find_if(vi.begin(), vi.end(), Cmp_by_name("table")));
+
+    // 8. Remove (erase) two Items identified by iid from vi.
+    vi.erase(find_if(vi.begin(), vi.end(), Cmp_by_iid(6)));
+    vi.erase(find_if(vi.begin(), vi.end(), Cmp_by_iid(76)));
+
+    // 9. Repeat the exercise with a list<Item> rather than a vector<Item>
+    print(li, '\n');
+
+    // iterator as needed by sort.
+    li.sort([](const Item& a, const Item& b) { return a.name < b.name; });
+    li.sort([](const Item& a, const Item& b) { return a.iid < b.iid; });
+    li.sort([](const Item& a, const Item& b) { return a.value > b.value; });
+
+    // changed names to not upset the tabbing..
+    tmp = {"horse", 99, 1.34};
+    li.insert(find_if(li.begin(), li.end(), Smaller_than(tmp.value)),
+            tmp);
+
+    tmp = {"Canon", 9988, 499.95};
+    li.insert(find_if(li.begin(), li.end(), Smaller_than(tmp.value)),
+            tmp);
+
+    li.erase(find_if(li.begin(), li.end(), Cmp_by_name("cup")));
+    li.erase(find_if(li.begin(), li.end(), Cmp_by_name("plate")));
+
+    li.erase(find_if(li.begin(), li.end(), Cmp_by_iid(32)));
+    li.erase(find_if(li.begin(), li.end(), Cmp_by_iid(6)));
+
+    print(li, '\n');
+}
+catch(exception& e) {
+    cerr << "Exception: " << e.what() <<endl;
+    return 1;
+}
+catch(...) {
+    cerr << "Unknown exception\n";
+    return 2;
+}
+
+
+
+
+
+
+
+
+
+file.txt
+glass      32       187.33
+calculator 54       32.6
+tree       45       178.5 
+leptop     65       145.88
+cup        4        98.6
+toy        6        198.56
+lighter    18       56.8
+plate      89       11.7
+table      9        9.77
+bulb       76       67.98
